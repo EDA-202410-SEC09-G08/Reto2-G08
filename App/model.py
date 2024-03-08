@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import mergesort as merg
 from DISClib.Algorithms.Sorting import quicksort as quk
+from DISClib.ADT import map as mp
 assert cf
 
 """
@@ -50,20 +51,60 @@ def new_data_structs():
     manera vacía para posteriormente almacenar la información.
     """
     #TODO: Inicializar las estructuras de datos
-    pass
+    catalog = {}
+    catalog["jobs"] = lt.newList()
+    catalog['map_req1'] = mp.newMap()
+    return catalog
 
 
 # Funciones para agregar informacion al modelo
 
-def add_data(data_structs, data):
+def add_data_jobs(data_structs, data):
     """
     Función para agregar nuevos elementos a la lista
     """
     #TODO: Crear la función para agregar elementos a una lista
-    pass
+    lt.addLast(data_structs["jobs"], data)
+    # crear estrcutura para req 1 
+    mapa_cod = data_structs["map_req1"]
+    codigo = data["country_code"]
+    experticia = data["experience_level"]
+    if not mp.contains(mapa_cod, codigo):
+        mapa_exp = mp.newMap()
+        lista = lt.newList()
+        mp.put(mapa_cod, codigo, mapa_exp)
+        mp.put(mapa_exp, experticia, lista)
+        lt.addLast(lista, data)
+    
+    else: 
+        mapa_exp = mp.get(mapa_cod,codigo)["value"]
+        if not mp.contains(mapa_exp,experticia):
+            lista = lt.newList()
+            mp.put(mapa_exp, experticia, lista)
+            lt.addLast(lista, data)
+        else: 
+            lista = mp.get(mapa_exp, experticia)["value"]
+            lt.addLast(lista, data)
 
 
-# Funciones para creacion de datos
+def data_size_jobs(data_structs):
+    """
+    Retorna el tamaño de la lista de datos
+    """
+    #TODO: Crear la función para obtener el tamaño de una lista
+    return lt.size(data_structs["jobs"])
+
+def first_last_jobs(data_structs):
+    first = lt.subList(data_structs["jobs"],1,3)
+    last = lt.subList(data_structs["jobs"],lt.size(data_structs["jobs"])-2,3)
+    rta = lt.newList()
+    for element in lt.iterator(first):
+        lt.addLast(rta,element)
+    for element in lt.iterator(last):
+        lt.addLast(rta,element)
+    return rta
+
+
 
 def new_data(id, info):
     """
@@ -91,14 +132,19 @@ def data_size(data_structs):
     pass
 
 
-def req_1(data_structs):
+def req_1(data_structs, ofertas, codigo_pais, experticia):
     """
     Función que soluciona el requerimiento 1
     """
     # TODO: Realizar el requerimiento 1
-    pass
-
-
+    mapa_cod = data_structs["map_req1"]
+    mapa_experticia = mp.get(mapa_cod, codigo_pais)["value"]
+    rq1 = mp.get(mapa_experticia, experticia)["value"]
+    num_ofertas = lt.size(rq1)
+    if lt.size(rq1) > ofertas:
+        rq1 = lt.subList(rq1, 1, ofertas)
+    return num_ofertas, rq1
+    
 def req_2(data_structs):
     """
     Función que soluciona el requerimiento 2

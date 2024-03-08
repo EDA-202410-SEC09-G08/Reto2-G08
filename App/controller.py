@@ -36,17 +36,27 @@ def new_controller():
     Crea una instancia del modelo
     """
     #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
+    control = {
+        'model': None
+    }
+    control['model'] = model.new_data_structs()
+    return control
+
 
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control):
     """
     Carga los datos del reto
     """
     # TODO: Realizar la carga de datos
-    pass
+    catalog = control['model']
+    file = cf.data_dir + 'data/small-jobs.csv'
+    input_file = csv.DictReader(open(file, encoding='utf-8'),delimiter=";")
+    for jobs in input_file:
+        model.add_data_jobs(catalog, jobs)
+    return model.data_size_jobs(catalog), model.first_last_jobs(catalog)
 
 
 # Funciones de ordenamiento
@@ -69,12 +79,13 @@ def get_data(control, id):
     pass
 
 
-def req_1(control):
+def req_1(control,ofertas, codigo_pais, experticia):
     """
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
-    pass
+    rq1 = model.req_1(control["model"], ofertas, codigo_pais, experticia)
+    return rq1
 
 
 def req_2(control):
