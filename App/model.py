@@ -54,6 +54,7 @@ def new_data_structs():
     catalog = {}
     catalog["jobs"] = lt.newList()
     catalog['map_req1'] = mp.newMap()
+    catalog["map_req2"] = mp.newMap()
     return catalog
 
 
@@ -65,7 +66,6 @@ def add_data_jobs(data_structs, data):
     """
     #TODO: Crear la función para agregar elementos a una lista
     lt.addLast(data_structs["jobs"], data)
-    # crear estrcutura para req 1 
     mapa_cod = data_structs["map_req1"]
     codigo = data["country_code"]
     experticia = data["experience_level"]
@@ -86,6 +86,28 @@ def add_data_jobs(data_structs, data):
             lista = mp.get(mapa_exp, experticia)["value"]
             lt.addLast(lista, data)
 
+def add_data_jobs2(data_structs, data):
+    lt.addLast(data_structs["jobs"],data)
+    mapa_empresa = data_structs["map_req2"]
+    empresa = data["company_name"]
+    ciudad = data["city"]
+    if not mp.contains(mapa_empresa, empresa):
+        mapa_ciudad = mp.newMap()
+        lista = lt.newList()
+        mp.put(mapa_empresa, empresa, ciudad)
+        mp.put(mapa_ciudad, ciudad, lista)
+        lt.addLast(lista, data)
+
+    else: 
+        mapa_ciudad = mp.get(mapa_empresa, empresa)["value"]
+        if not mp.contains(mapa_ciudad, ciudad):
+            lista = lt.newList()
+            mp.put(mapa_ciudad, ciudad, lista)
+            lt.addLast(lista, data)
+        else:
+            lista = mp.get(mapa_ciudad, ciudad)["value"]
+            lt.addLast(lista,data)
+
 
 def data_size_jobs(data_structs):
     """
@@ -93,6 +115,8 @@ def data_size_jobs(data_structs):
     """
     #TODO: Crear la función para obtener el tamaño de una lista
     return lt.size(data_structs["jobs"])
+
+
 
 def first_last_jobs(data_structs):
     first = lt.subList(data_structs["jobs"],1,3)
@@ -145,13 +169,20 @@ def req_1(data_structs, ofertas, codigo_pais, experticia):
         rq1 = lt.subList(rq1, 1, ofertas)
     return num_ofertas, rq1
     
-def req_2(data_structs):
+def req_2(data_structs, ofertas, empresa, ciudad):
     """
     Función que soluciona el requerimiento 2
     """
     # TODO: Realizar el requerimiento 2
-    pass
-
+    mapa_empresa = data_structs["map_req2"]
+    mapa_ciudad = mp.get(mapa_empresa, empresa)["value"]
+    rq2 = mp.get(mapa_ciudad, ciudad)["value"]
+    num_ofertas = lt.size(rq2) 
+    if lt.size(rq2) > ofertas:
+        rq2 = lt.subList(rq2, 1, ofertas)
+    return num_ofertas, rq2
+    
+    
 
 def req_3(data_structs):
     """

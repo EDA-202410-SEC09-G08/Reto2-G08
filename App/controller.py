@@ -56,6 +56,9 @@ def load_data(control):
     input_file = csv.DictReader(open(file, encoding='utf-8'),delimiter=";")
     for jobs in input_file:
         model.add_data_jobs(catalog, jobs)
+    for jobs in input_file:
+        model.add_data_jobs2(catalog, jobs)
+    
     return model.data_size_jobs(catalog), model.first_last_jobs(catalog)
 
 
@@ -88,12 +91,14 @@ def req_1(control,ofertas, codigo_pais, experticia):
     return rq1
 
 
-def req_2(control):
+def req_2(control, ofertas, empresa, ciudad):
     """
     Retorna el resultado del requerimiento 2
     """
     # TODO: Modificar el requerimiento 2
-    pass
+    rq2 = model.req_2(control["model"], ofertas, empresa, ciudad)
+    return rq2
+
 
 
 def req_3(control):
