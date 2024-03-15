@@ -109,7 +109,16 @@ def print_req_3(control):
         Función que imprime la solución del Requerimiento 3 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 3
-    pass
+    empresa = input("Ingrese el nombre de la empresa a solicitar: ")
+    fecha_inicial = input("Ingrese la fecha inicial solicitada: ")
+    fecha_final = input("Ingrese la fecha final solicitada: ")
+    rq3 = controller.req_3(control,empresa, fecha_inicial, fecha_final)
+    print(("El total de ofertas ofrecidas es "),lt.size(rq3[3]))
+    print(("El total de ofertas junior ofrecidas es "),(rq3[0]))
+    print(("El total de ofertas mid es "),(rq3[1]))
+    print(("El total de ofertas senior es "),(rq3[2]))
+    print(tabulate(lt.iterator(rq3[3]),headers= "keys", tablefmt="grid"))
+
 
 
 def print_req_4(control):
@@ -170,6 +179,13 @@ if __name__ == "__main__":
             data = load_data(control)
             print("Se han cargado",data[0], "trabajos")
             print(tabulate(lt.iterator(data[1]),headers="keys", tablefmt = "grid"))
+            print("Se han cargado",data[2], "tipos de trabajo")
+            print(tabulate(lt.iterator(data[3]),headers="keys", tablefmt= "grid"))
+            print("Se han cargado",data[4], "multilocaciones")
+            print(tabulate(lt.iterator(data[5]),headers="keys", tablefmt= "grid"))
+            print("Se han cargado",data[6], "habilidades")
+            print(tabulate(lt.iterator(data[7]),headers="keys", tablefmt= "grid"))
+            
         elif int(inputs) == 2:
             print_req_1(control)
 

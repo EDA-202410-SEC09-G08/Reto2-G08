@@ -35,7 +35,9 @@ from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import mergesort as merg
 from DISClib.Algorithms.Sorting import quicksort as quk
 from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
 assert cf
+from datetime import datetime 
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá
@@ -53,8 +55,12 @@ def new_data_structs():
     #TODO: Inicializar las estructuras de datos
     catalog = {}
     catalog["jobs"] = lt.newList()
+    catalog["employments_types"] = lt.newList()
+    catalog["multilocation"] = lt.newList()
+    catalog["skills"] = lt.newList()
     catalog['map_req1'] = mp.newMap()
     catalog["map_req2"] = mp.newMap()
+    catalog["map_req3"]= mp.newMap()
     return catalog
 
 
@@ -85,28 +91,49 @@ def add_data_jobs(data_structs, data):
         else: 
             lista = mp.get(mapa_exp, experticia)["value"]
             lt.addLast(lista, data)
-
-def add_data_jobs2(data_structs, data):
-    lt.addLast(data_structs["jobs"],data)
-    mapa_empresa = data_structs["map_req2"]
+    #Vamos a generar la funcion para req3
     empresa = data["company_name"]
-    ciudad = data["city"]
-    if not mp.contains(mapa_empresa, empresa):
-        mapa_ciudad = mp.newMap()
-        lista = lt.newList()
-        mp.put(mapa_empresa, empresa, ciudad)
-        mp.put(mapa_ciudad, ciudad, lista)
-        lt.addLast(lista, data)
-
-    else: 
-        mapa_ciudad = mp.get(mapa_empresa, empresa)["value"]
-        if not mp.contains(mapa_ciudad, ciudad):
-            lista = lt.newList()
-            mp.put(mapa_ciudad, ciudad, lista)
-            lt.addLast(lista, data)
+    mapa_emp = data_structs["map_req3"]
+    if not mp.contains(mapa_emp, empresa):
+        empresa_particular = mp.newMap()
+        ofertas = lt.newList()
+        mp.put(empresa_particular, "ofertas", ofertas)
+        lt.addLast(ofertas,data)
+        mp.put(empresa_particular,"exp_junior",0)
+        mp.put(empresa_particular,"exp_mid",0)
+        mp.put(empresa_particular,"exp_senior",0)
+        mp.put(mapa_emp, empresa,empresa_particular)
+        if experticia == "junior":
+            expjunior = me.getValue(mp.get(empresa_particular, "exp_junior"))
+            mp.put(empresa_particular, "exp_junior",expjunior+1)
+        elif experticia == "mid":
+            expmid = me.getValue(mp.get(empresa_particular, "exp_mid"))
+            mp.put(empresa_particular, "exp_mid",expmid+1)
         else:
-            lista = mp.get(mapa_ciudad, ciudad)["value"]
-            lt.addLast(lista,data)
+            expsenior = me.getValue(mp.get(empresa_particular, "exp_senior"))
+            mp.put(empresa_particular, "exp_senior",expsenior+1)
+    else: 
+        empresa_particular = me.getValue(mp.get(mapa_emp, empresa))
+        ofertas = me.getValue(mp.get(empresa_particular, "ofertas"))
+        lt.addLast(ofertas,data)
+        if experticia == "junior":
+            expjunior = me.getValue(mp.get(empresa_particular, "exp_junior"))
+            mp.put(empresa_particular, "exp_junior",expjunior+1)
+        elif experticia == "mid":
+            expmid = me.getValue(mp.get(empresa_particular, "exp_mid"))
+            mp.put(empresa_particular, "exp_mid",expmid+1)
+        else:
+            expsenior = me.getValue(mp.get(empresa_particular, "exp_senior"))
+            mp.put(empresa_particular, "exp_senior",expsenior+1)
+            
+def add_data_employments_types(data_structs,data):
+    lt.addLast(data_structs["employments_types"],data)
+    
+def add_data_multilocation(data_structs, data):
+    lt.addLast(data_structs["multilocation"],data)
+
+def add_data_skills(data_structs, data):
+    lt.addLast(data_structs["skills"],data)
 
 
 def data_size_jobs(data_structs):
@@ -116,7 +143,14 @@ def data_size_jobs(data_structs):
     #TODO: Crear la función para obtener el tamaño de una lista
     return lt.size(data_structs["jobs"])
 
+def data_size_employments_types(data_structs):
+    return lt.size(data_structs["employments_types"])
 
+def data_size_multilocation(data_structs):
+    return lt.size(data_structs["multilocation"])
+
+def data_size_skills(data_structs):
+    return lt.size(data_structs["skills"])
 
 def first_last_jobs(data_structs):
     first = lt.subList(data_structs["jobs"],1,3)
@@ -128,6 +162,35 @@ def first_last_jobs(data_structs):
         lt.addLast(rta,element)
     return rta
 
+def first_last_employments(data_structs):
+    first = lt.subList(data_structs["employments_types"],1,3)
+    last = lt.subList(data_structs["employments_types"],lt.size(data_structs["employments_types"])-2,3)
+    rta = lt.newList()
+    for element in lt.iterator(first):
+        lt.addLast(rta,element)
+    for element in lt.iterator(last):
+        lt.addLast(rta,element)
+    return rta
+
+def first_last_multilocation(data_structs):
+    first = lt.subList(data_structs["multilocation"],1,3)
+    last = lt.subList(data_structs["multilocation"], lt.size(data_structs["multilocation"])-2,3)
+    rta = lt.newList()
+    for element in lt.iterator(first):
+        lt.addLast(rta,element)
+    for element in lt.iterator(last):
+        lt.addLast(rta,element)
+    return rta
+
+def first_last_skills(data_structs):
+    first = lt.subList(data_structs["skills"],1,3)
+    last = lt.subList(data_structs["skills"], lt.size(data_structs["multilocation"])-2,3)
+    rta = lt.newList()
+    for element in lt.iterator(first):
+        lt.addLast(rta,element)
+    for element in lt.iterator(last):
+        lt.addLast(rta,element)
+    return rta
 
 
 def new_data(id, info):
@@ -184,12 +247,36 @@ def req_2(data_structs, ofertas, empresa, ciudad):
     
     
 
-def req_3(data_structs):
+def req_3(data_structs,nombre_empresa, fecha_inicial, fecha_final):
     """
     Función que soluciona el requerimiento 3
     """
     # TODO: Realizar el requerimiento 3
-    pass
+    mapa3 = data_structs["map_req3"]
+    mapa_empresa = mp.get(mapa3, nombre_empresa)["value"]
+    ofertas = mp.get(mapa_empresa, "ofertas")["value"]
+    ofertas_fecha = lt.newList()
+    junior = 0
+    mid = 0
+    senior = 0
+    fecha_inicial = datetime.strptime(fecha_inicial,"%Y-%m-%d")
+    fecha_final = datetime.strptime(fecha_final,"%Y-%m-%d")
+    for oferta in lt.iterator(ofertas): 
+        fecha = datetime.strptime(oferta["published_at"].split("T")[0],"%Y-%m-%d")
+        if fecha_inicial <= fecha and fecha <= fecha_final:
+            lt.addLast(ofertas_fecha,oferta)
+            experticia = oferta["experience_level"]
+            if experticia == "junior":
+                junior +=1
+            elif experticia == "mid":
+                mid +=1
+            else:
+                senior +=1
+    merg.sort(ofertas_fecha, sort_criteria3)
+
+
+    return junior, mid, senior, ofertas_fecha
+
 
 
 def req_4(data_structs):
@@ -244,7 +331,7 @@ def compare(data_1, data_2):
 # Funciones de ordenamiento
 
 
-def sort_criteria(data_1, data_2):
+def sort_criteria3(data_1, data_2):
     """sortCriteria criterio de ordenamiento para las funciones de ordenamiento
 
     Args:
@@ -255,8 +342,14 @@ def sort_criteria(data_1, data_2):
         _type_: _description_
     """
     #TODO: Crear función comparadora para ordenar
-    pass
-
+    
+    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")>datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
+        
+        return True
+    elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
+        if data_1["country_code"]> data_2["country_code"]:
+            return True 
+    return False
 
 def sort(data_structs):
     """

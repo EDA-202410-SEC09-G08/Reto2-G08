@@ -55,11 +55,24 @@ def load_data(control):
     file = cf.data_dir + 'data/small-jobs.csv'
     input_file = csv.DictReader(open(file, encoding='utf-8'),delimiter=";")
     for jobs in input_file:
-        model.add_data_jobs(catalog, jobs)
-    for jobs in input_file:
-        model.add_data_jobs2(catalog, jobs)
+        model.add_data_jobs(catalog, jobs)    
+    file2 = cf.data_dir + "data/small-employments_types.csv"
+    input_file2 = csv.DictReader(open(file2, encoding="utf-8"),delimiter=";")
+    for employments_types in input_file2:
+        model.add_data_employments_types(catalog,employments_types)
+
+    file3 = cf.data_dir + "data/small-multilocations.csv"
+    input_file3 = csv.DictReader(open(file3, encoding="utf-8"),delimiter=";")
+    for multilocations in input_file3:
+        model.add_data_multilocation(catalog,multilocations)
+ 
+    file4 = cf.data_dir + "data/small-skills.csv"
+    input_file4 = csv.DictReader(open(file4, encoding="utf-8"),delimiter=";")
+    for multilocations in input_file4:
+        model.add_data_skills(catalog,multilocations)
     
-    return model.data_size_jobs(catalog), model.first_last_jobs(catalog)
+    return model.data_size_jobs(catalog), model.first_last_jobs(catalog), model.data_size_employments_types(catalog), model.first_last_employments(catalog), model.data_size_multilocation(catalog), model.first_last_multilocation(catalog), model.data_size_skills(catalog), model.first_last_skills(catalog)
+
 
 
 # Funciones de ordenamiento
@@ -101,12 +114,12 @@ def req_2(control, ofertas, empresa, ciudad):
 
 
 
-def req_3(control):
+def req_3(control,nombre_empresa, fecha_inicial,fecha_final):
     """
     Retorna el resultado del requerimiento 3
     """
     # TODO: Modificar el requerimiento 3
-    pass
+    return model.req_3(control["model"], nombre_empresa, fecha_inicial,fecha_final)
 
 
 def req_4(control):
