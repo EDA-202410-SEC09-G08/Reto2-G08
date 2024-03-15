@@ -95,13 +95,7 @@ def print_req_2(control):
         Función que imprime la solución del Requerimiento 2 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 2
-    ofertas = int(input("Ingrese el numero de ofertas solicitada: "))
-    empresa = input("Ingrese el nombre de la empresa a solicitar: ")
-    ciudad = input("Ingrese la ciudad solicitada: ")
-    rq2 = controller.req_2(control, ofertas, empresa, ciudad)
-    print(("El total de ofertas ofrecidas es "),lt.size(rq2[0]))
-    print(tabulate(lt.iterator(rq2[1]),headers= "keys", tablefmt="grid"))
-
+    pass
 
 
 def print_req_3(control):
@@ -118,7 +112,6 @@ def print_req_3(control):
     print(("El total de ofertas mid es "),(rq3[1]))
     print(("El total de ofertas senior es "),(rq3[2]))
     print(tabulate(lt.iterator(rq3[3]),headers= "keys", tablefmt="grid"))
-
 
 
 def print_req_4(control):

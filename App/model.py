@@ -237,13 +237,7 @@ def req_2(data_structs, ofertas, empresa, ciudad):
     Función que soluciona el requerimiento 2
     """
     # TODO: Realizar el requerimiento 2
-    mapa_empresa = data_structs["map_req2"]
-    mapa_ciudad = mp.get(mapa_empresa, empresa)["value"]
-    rq2 = mp.get(mapa_ciudad, ciudad)["value"]
-    num_ofertas = lt.size(rq2) 
-    if lt.size(rq2) > ofertas:
-        rq2 = lt.subList(rq2, 1, ofertas)
-    return num_ofertas, rq2
+    pass
     
     
 
@@ -273,8 +267,6 @@ def req_3(data_structs,nombre_empresa, fecha_inicial, fecha_final):
             else:
                 senior +=1
     merg.sort(ofertas_fecha, sort_criteria3)
-
-
     return junior, mid, senior, ofertas_fecha
 
 

@@ -109,8 +109,7 @@ def req_2(control, ofertas, empresa, ciudad):
     Retorna el resultado del requerimiento 2
     """
     # TODO: Modificar el requerimiento 2
-    rq2 = model.req_2(control["model"], ofertas, empresa, ciudad)
-    return rq2
+    pass
 
 
 
