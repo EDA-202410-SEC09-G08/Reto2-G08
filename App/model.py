@@ -72,25 +72,23 @@ def add_data_jobs(data_structs, data):
     """
     #TODO: Crear la función para agregar elementos a una lista
     lt.addLast(data_structs["jobs"], data)
+
+    #Vamos a generar la funcion para req1
     mapa_cod = data_structs["map_req1"]
     codigo = data["country_code"]
     experticia = data["experience_level"]
     if not mp.contains(mapa_cod, codigo):
-        mapa_exp = mp.newMap()
-        lista = lt.newList()
-        mp.put(mapa_cod, codigo, mapa_exp)
-        mp.put(mapa_exp, experticia, lista)
-        lt.addLast(lista, data)
-    
+        map_content = {
+            "junior": lt.newList(datastructure="SINGLE_LINKED"),
+            "mid": lt.newList(datastructure="SINGLE_LINKED"),
+            "senior": lt.newList(datastructure="SINGLE_LINKED")
+        }
+        lt.addLast(map_content[experticia], data)
+        mp.put(mapa_cod, codigo, map_content)
     else: 
-        mapa_exp = mp.get(mapa_cod,codigo)["value"]
-        if not mp.contains(mapa_exp,experticia):
-            lista = lt.newList()
-            mp.put(mapa_exp, experticia, lista)
-            lt.addLast(lista, data)
-        else: 
-            lista = mp.get(mapa_exp, experticia)["value"]
-            lt.addLast(lista, data)
+        map_content = me.getValue(mp.get(mapa_cod, codigo))
+        lt.addLast(map_content[experticia], data)
+
     #Vamos a generar la funcion para req3
     empresa = data["company_name"]
     mapa_emp = data_structs["map_req3"]
@@ -225,12 +223,16 @@ def req_1(data_structs, ofertas, codigo_pais, experticia):
     """
     # TODO: Realizar el requerimiento 1
     mapa_cod = data_structs["map_req1"]
-    mapa_experticia = mp.get(mapa_cod, codigo_pais)["value"]
-    rq1 = mp.get(mapa_experticia, experticia)["value"]
-    num_ofertas = lt.size(rq1)
-    if lt.size(rq1) > ofertas:
-        rq1 = lt.subList(rq1, 1, ofertas)
-    return num_ofertas, rq1
+    map_content = me.getValue(mp.get(mapa_cod, codigo_pais))
+    total_ofertas_pais =  lt.size(map_content["junior"]) + lt.size(map_content["mid"]) + lt.size(map_content["senior"])
+    rq1 = map_content[experticia]
+    num_ofertas = lt.size(map_content[experticia])
+    #ordeno la lista de ofertas por fecha, en orden cronológico
+    merg.sort(rq1, sort_criteria1)
+    if num_ofertas > ofertas: 
+        rq1 = lt.subList(map_content[experticia], lt.size(map_content[experticia]) - ofertas + 1, ofertas)
+    return total_ofertas_pais, num_ofertas, rq1
+
     
 def req_2(data_structs, ofertas, empresa, ciudad):
     """
@@ -321,6 +323,12 @@ def compare(data_1, data_2):
     pass
 
 # Funciones de ordenamiento
+
+def sort_criteria1(data_1, data_2): 
+    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")<datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
+        return True
+    else: 
+        return False
 
 
 def sort_criteria3(data_1, data_2):

@@ -86,8 +86,9 @@ def print_req_1(control):
     codigo_pais = input("Ingrese el codigo de pais a solicitar: ")
     experticia = input("Ingrese el nivel de experticia solicitada: ")
     rq1 = controller.req_1(control, ofertas, codigo_pais, experticia)
-    print(("El total de ofertas ofrecidas es "),rq1[0])
-    print(tabulate(lt.iterator(rq1[1]),headers= "keys", tablefmt="grid"))
+    print("El total de ofertas ofrecidas en ", codigo_pais, " es ", rq1[0])
+    print("El total de ofertas de trabajo ofrecidas según la condición es ", rq1[1])
+    print(tabulate(lt.iterator(rq1[2]),headers= "keys", tablefmt="grid"))
 
 
 def print_req_2(control):
