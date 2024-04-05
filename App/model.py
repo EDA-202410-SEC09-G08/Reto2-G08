@@ -335,13 +335,14 @@ def sort_criteria3(data_1, data_2):
     """
     #TODO: Crear función comparadora para ordenar
     
-    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")>datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
+    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")<datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
         
         return True
     elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
-        if data_1["country_code"]> data_2["country_code"]:
+        if data_1["country_code"]< data_2["country_code"]:
             return True 
-    return False
+    else: 
+        return False
 
 def sort(data_structs):
     """
