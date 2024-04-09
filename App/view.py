@@ -87,7 +87,7 @@ def print_req_1(control):
     experticia = input("Ingrese el nivel de experticia solicitada: ")
     rq1 = controller.req_1(control, ofertas, codigo_pais, experticia)
     print("El total de ofertas ofrecidas en ", codigo_pais, " es ", rq1[0])
-    print("El total de ofertas de trabajo ofrecidas según la condición es ", rq1[1])
+    print("El total de ofertas de trabajo ofrecidas para la condición ", experticia, " es ", rq1[1])
     print(tabulate(lt.iterator(rq1[2]),headers= "keys", tablefmt="grid"))
 
 
@@ -133,11 +133,11 @@ def print_req_5(control):
     fecha_final = input("Ingrese la fecha final solicitada: ")
     rq5 = controller.req_5(control, ciudad, fecha_inicial, fecha_final)
     print("El total de ofertas publicadas en ", ciudad, " entre la fecha ", fecha_inicial, " y la fecha ", fecha_final, " es ", rq5[0])
-    print("El total de empresas que publicaron por lo menos una oferta en ", ciudad, " es ", rq5[1])
+    print("El total de empresas que publicaron por lo menos una oferta en ", ciudad, " durante el periodo de consulta es ", rq5[1])
     print("La empresa con mayor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[2][0], " con ", rq5[2][1], " ofertas.")
     print("La empresa con menor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[3][0], " con ", rq5[3][1], " ofertas.")
     print(tabulate(lt.iterator(rq5[4]),headers= "keys", tablefmt="grid"))
-
+    
 
 def print_req_6(control):
     """

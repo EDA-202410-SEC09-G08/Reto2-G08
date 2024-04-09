@@ -60,7 +60,15 @@ def new_data_structs():
     catalog["skills"] = lt.newList()
     catalog['map_req1'] = mp.newMap()
     catalog["map_req2"] = mp.newMap()
-    catalog["map_req3"]= mp.newMap()
+    catalog["map_req3"] = mp.newMap()
+    catalog["map_req5"] = mp.newMap(numelements=203564, 
+                                     prime=109345121,
+                                     maptype= "CHAINING", 
+                                     loadfactor=4)
+    catalog["map_req6"] = mp.newMap(numelements=203564, 
+                                     prime=109345121,
+                                     maptype= "CHAINING", 
+                                     loadfactor=4)
     return catalog
 
 
@@ -123,6 +131,19 @@ def add_data_jobs(data_structs, data):
         else:
             expsenior = me.getValue(mp.get(empresa_particular, "exp_senior"))
             mp.put(empresa_particular, "exp_senior",expsenior+1)
+    
+    #Vamos a generar la función para el req 5
+    mapa_ciudades = data_structs["map_req5"]
+    ciudad = data["city"]
+    if not mp.contains(mapa_ciudades, ciudad): 
+        ofertas_ciudad = lt.newList(datastructure="SINGLE_LINKED")
+        lt.addLast(ofertas_ciudad, data)
+        mp.put(mapa_ciudades, ciudad, ofertas_ciudad)
+    else: 
+        ofertas_ciudad = me.getValue(mp.get(mapa_ciudades, ciudad))
+        lt.addLast(ofertas_ciudad, data)
+
+    #Vamos a generar la función para el req 6
             
 def add_data_employments_types(data_structs,data):
     lt.addLast(data_structs["employments_types"],data)
@@ -281,12 +302,71 @@ def req_4(data_structs):
     pass
 
 
-def req_5(data_structs):
+def req_5(data_structs, ciudad, fecha_inicial, fecha_final):
     """
     Función que soluciona el requerimiento 5
     """
     # TODO: Realizar el requerimiento 5
-    pass
+    mapa_ciudades = data_structs["map_req5"]
+    ofertas_ciudad_seleccionada = me.getValue(mp.get(mapa_ciudades, ciudad))
+    fecha_inicial = datetime.strptime(fecha_inicial,"%Y-%m-%d")
+    fecha_final = datetime.strptime(fecha_final,"%Y-%m-%d")
+
+    #Encuentro el total de ofertas publicadas en la ciudad en el periodo de consulta.
+    ofertas_ciudad_tiempo = lt.newList(datastructure="SINGLE_LINKED")
+    for oferta in lt.iterator(ofertas_ciudad_seleccionada): 
+        fecha_oferta = datetime.strptime(oferta["published_at"].split("T")[0],"%Y-%m-%d")
+        if fecha_inicial <= fecha_oferta and fecha_oferta <= fecha_final:
+            lt.addLast(ofertas_ciudad_tiempo, oferta)
+    total_ofertas = lt.size(ofertas_ciudad_tiempo)
+
+    #Encuentro el total de empresas que publicaron por lo menos una oferta en la ciudad de consulta.
+    empresas_ciudad_tiempo = mp.newMap(numelements=203564,
+                                       prime=109345121,
+                                       maptype="CHAINING",
+                                       loadfactor=4)
+    for oferta in lt.iterator(ofertas_ciudad_tiempo): 
+        empresa = oferta["company_name"]
+        if not mp.contains(empresas_ciudad_tiempo, empresa): 
+            ofertas_empresa = lt.newList(datastructure="SINGLE_LINKED")
+            lt.addLast(ofertas_empresa, oferta)
+            mp.put(empresas_ciudad_tiempo, empresa, ofertas_empresa)
+        else: 
+            ofertas_empresa = me.getValue(mp.get(empresas_ciudad_tiempo, empresa))
+            lt.addLast(ofertas_empresa, oferta)
+    llaves = mp.keySet(empresas_ciudad_tiempo)
+    total_empresas = lt.size(llaves)
+
+    #Empresa con mayor número de ofertas y su conteo. Empresa con menor número de ofertas (al menos una) y su conteo.
+    max_ofertas = 0
+    min_ofertas = 203564
+    for empresa in lt.iterator(llaves): 
+        num_ofertas_empresa = lt.size(me.getValue(mp.get(empresas_ciudad_tiempo, empresa)))
+        if num_ofertas_empresa > max_ofertas: 
+            max_ofertas = num_ofertas_empresa
+            empresa_max = empresa
+        if num_ofertas_empresa < min_ofertas: 
+            min_ofertas = num_ofertas_empresa
+            empresa_min = empresa
+    rta_empresa_max = (empresa_max, max_ofertas)
+    rta_empresa_min = (empresa_min, min_ofertas)
+
+    #El listado de ofertas publicadas ordenadas cronológicamente por fecha y nombre de la empresa. 
+    #Fecha de publicación de la oferta, Título de la oferta, Nombre de la empresa de la oferta, 
+    #Tipo de lugar de trabajo de la oferta, Tamaño de la empresa de la oferta, Tipo de lugar de trabajo de la oferta
+    merg.sort(ofertas_ciudad_tiempo, sort_criteria5)
+    for oferta in lt.iterator(ofertas_ciudad_tiempo): 
+        oferta.pop("street")
+        oferta.pop("address_text")
+        oferta.pop("marker_icon")
+        oferta.pop("company_url")
+        oferta.pop("experience_level")
+        oferta.pop("remote_interview")
+        oferta.pop("open_to_hire_ukrainians")
+        oferta.pop("id")
+        oferta.pop("display_offer")
+
+    return total_ofertas, total_empresas, rta_empresa_max, rta_empresa_min, ofertas_ciudad_tiempo
 
 
 def req_6(data_structs):
@@ -351,6 +431,18 @@ def sort_criteria3(data_1, data_2):
             return True 
     else: 
         return False
+    
+
+def sort_criteria5(data_1, data_2): 
+    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")<datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
+        
+        return True
+    elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
+        if data_1["company_name"]< data_2["company_name"]:
+            return True 
+    else: 
+        return False
+
 
 def sort(data_structs):
     """
