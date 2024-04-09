@@ -54,13 +54,22 @@ def new_data_structs():
     """
     #TODO: Inicializar las estructuras de datos
     catalog = {}
-    catalog["jobs"] = lt.newList()
+    catalog["jobs"] = lt.newList(datastructure="SINGLE_LINKED")
     catalog["employments_types"] = lt.newList()
     catalog["multilocation"] = lt.newList()
     catalog["skills"] = lt.newList()
-    catalog['map_req1'] = mp.newMap()
-    catalog["map_req2"] = mp.newMap()
-    catalog["map_req3"] = mp.newMap()
+    catalog['map_req1'] = mp.newMap(numelements=203564,
+                                    prime=109345121,
+                                    maptype= "CHAINING", 
+                                    loadfactor=4)
+    catalog["map_req2"] = mp.newMap(numelements=203564,
+                                    prime=109345121,
+                                    maptype= "CHAINING", 
+                                    loadfactor=4)
+    catalog["map_req3"] = mp.newMap(numelements=203564,
+                                    prime=109345121,
+                                    maptype= "CHAINING", 
+                                    loadfactor=4)
     catalog["map_req5"] = mp.newMap(numelements=203564, 
                                      prime=109345121,
                                      maptype= "CHAINING", 
@@ -248,10 +257,20 @@ def req_1(data_structs, ofertas, codigo_pais, experticia):
     total_ofertas_pais =  lt.size(map_content["junior"]) + lt.size(map_content["mid"]) + lt.size(map_content["senior"])
     rq1 = map_content[experticia]
     num_ofertas = lt.size(map_content[experticia])
+
     #ordeno la lista de ofertas por fecha, en orden cronológico
     merg.sort(rq1, sort_criteria1)
     if num_ofertas > ofertas: 
         rq1 = lt.subList(map_content[experticia], lt.size(map_content[experticia]) - ofertas + 1, ofertas)
+    for oferta in lt.iterator(rq1): 
+        oferta.pop("street")
+        oferta.pop("address_text")
+        oferta.pop("marker_icon")
+        oferta.pop("company_url")
+        oferta.pop("remote_interview")
+        oferta.pop("id")
+        oferta.pop("display_offer")
+
     return total_ofertas_pais, num_ofertas, rq1
 
     
