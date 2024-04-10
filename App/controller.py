@@ -52,21 +52,21 @@ def load_data(control):
     """
     # TODO: Realizar la carga de datos
     catalog = control['model']
-    file = cf.data_dir + 'data/small-jobs.csv'
+    file = cf.data_dir + 'small-jobs.csv'
     input_file = csv.DictReader(open(file, encoding='utf-8'),delimiter=";")
     for jobs in input_file:
         model.add_data_jobs(catalog, jobs)    
-    file2 = cf.data_dir + "data/small-employments_types.csv"
+    file2 = cf.data_dir + "small-employments_types.csv"
     input_file2 = csv.DictReader(open(file2, encoding="utf-8"),delimiter=";")
     for employments_types in input_file2:
         model.add_data_employments_types(catalog,employments_types)
 
-    file3 = cf.data_dir + "data/small-multilocations.csv"
+    file3 = cf.data_dir + "small-multilocations.csv"
     input_file3 = csv.DictReader(open(file3, encoding="utf-8"),delimiter=";")
     for multilocations in input_file3:
         model.add_data_multilocation(catalog,multilocations)
  
-    file4 = cf.data_dir + "data/small-skills.csv"
+    file4 = cf.data_dir + "small-skills.csv"
     input_file4 = csv.DictReader(open(file4, encoding="utf-8"),delimiter=";")
     for multilocations in input_file4:
         model.add_data_skills(catalog,multilocations)
@@ -129,19 +129,20 @@ def req_4(control):
     pass
 
 
-def req_5(control):
+def req_5(control, ciudad, fecha_inicial, fecha_final):
     """
     Retorna el resultado del requerimiento 5
     """
     # TODO: Modificar el requerimiento 5
-    pass
+    return model.req_5(control["model"], ciudad, fecha_inicial, fecha_final)
 
-def req_6(control):
+def req_6(control, numero_ciudades, experticia, anio):
     """
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    pass
+    return model.req_6(control["model"], numero_ciudades, experticia, anio)
+    
 
 
 def req_7(control, N, anio, mes):
