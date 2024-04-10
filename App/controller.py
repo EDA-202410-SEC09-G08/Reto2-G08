@@ -52,21 +52,21 @@ def load_data(control):
     """
     # TODO: Realizar la carga de datos
     catalog = control['model']
-    file = cf.data_dir + 'small-jobs.csv'
+    file = cf.data_dir + 'large-jobs.csv'
     input_file = csv.DictReader(open(file, encoding='utf-8'),delimiter=";")
     for jobs in input_file:
         model.add_data_jobs(catalog, jobs)    
-    file2 = cf.data_dir + "small-employments_types.csv"
+    file2 = cf.data_dir + "large-employments_types.csv"
     input_file2 = csv.DictReader(open(file2, encoding="utf-8"),delimiter=";")
     for employments_types in input_file2:
         model.add_data_employments_types(catalog,employments_types)
 
-    file3 = cf.data_dir + "small-multilocations.csv"
+    file3 = cf.data_dir + "large-multilocations.csv"
     input_file3 = csv.DictReader(open(file3, encoding="utf-8"),delimiter=";")
     for multilocations in input_file3:
         model.add_data_multilocation(catalog,multilocations)
  
-    file4 = cf.data_dir + "small-skills.csv"
+    file4 = cf.data_dir + "large-skills.csv"
     input_file4 = csv.DictReader(open(file4, encoding="utf-8"),delimiter=";")
     for multilocations in input_file4:
         model.add_data_skills(catalog,multilocations)

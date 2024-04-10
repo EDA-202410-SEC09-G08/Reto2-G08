@@ -144,7 +144,15 @@ def print_req_6(control):
         Función que imprime la solución del Requerimiento 6 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    numero_ciudades = int(input("Ingrese el numero de ciudades a solicitar: "))
+    experticia = input("Ingrese el nivel de experticia solicitada: ")
+    anio = int(input("Ingrese el año a solicitar: "))
+    rq6 = controller.req_6(control, numero_ciudades, experticia, anio)
+    #print("El total de ciudades que cumplen con las condiciones de la consulta es ", rq6[0])
+    #print("El total de empresas que cumplen con las condiciones de la consulta es ", rq6[1])
+    print("El total de ofertas publicadas que cumplen con las condiciones de la consulta es ", rq6)
+    #print("El nombre de la ciudad con mayor cantidad de ofertas de empleos es ", rq6[3][0], " con ", rq6[3][1], " ofertas.")
+    #print("El nombre de la ciudad con menor cantidad de ofertas de empleos es  ", rq6[4][0], " con ", rq6[4][1], " ofertas.")
 
 
 def print_req_7(control):

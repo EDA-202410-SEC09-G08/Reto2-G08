@@ -153,6 +153,20 @@ def add_data_jobs(data_structs, data):
         lt.addLast(ofertas_ciudad, data)
 
     #Vamos a generar la función para el req 6
+    mapa_anios = data_structs["map_req6"]
+    anio = data["published_at"].split("-")[0]
+    experticia = data["experience_level"]
+    if not mp.contains(mapa_anios, anio): 
+        dic_por_exp = {
+            "junior": lt.newList(datastructure="SINGLE_LINKED"),
+            "mid": lt.newList(datastructure="SINGLE_LINKED"),
+            "senior": lt.newList(datastructure="SINGLE_LINKED")
+        }
+        lt.addLast(dic_por_exp[experticia], data)
+        mp.put(mapa_anios, anio, dic_por_exp)
+    else: 
+        dic_por_exp = me.getValue(mp.get(mapa_anios, anio))
+        lt.addLast(dic_por_exp[experticia], data)
             
 def add_data_employments_types(data_structs,data):
     lt.addLast(data_structs["employments_types"],data)
@@ -281,7 +295,6 @@ def req_2(data_structs, ofertas, empresa, ciudad):
     # TODO: Realizar el requerimiento 2
     pass
     
-    
 
 def req_3(data_structs,nombre_empresa, fecha_inicial, fecha_final):
     """
@@ -310,7 +323,6 @@ def req_3(data_structs,nombre_empresa, fecha_inicial, fecha_final):
                 senior +=1
     merg.sort(ofertas_fecha, sort_criteria3)
     return junior, mid, senior, ofertas_fecha
-
 
 
 def req_4(data_structs):
@@ -388,12 +400,36 @@ def req_5(data_structs, ciudad, fecha_inicial, fecha_final):
     return total_ofertas, total_empresas, rta_empresa_max, rta_empresa_min, ofertas_ciudad_tiempo
 
 
-def req_6(data_structs):
+def req_6(data_structs, numero_ciudades, experticia, anio):
     """
     Función que soluciona el requerimiento 6
     """
     # TODO: Realizar el requerimiento 6
-    pass
+    mapa_anios = data_structs["map_req6"]
+
+    #Total ofertas que cumplen con las condiciones de la consulta - sin el numero de ofertas
+    ofertas_anio = me.getValue(mp.get(mapa_anios, anio))
+    ofertas_anio_exp = ofertas_anio[experticia]
+    total_ofertas = lt.size(ofertas_anio_exp)
+
+    #Total empresas que cumplen con las condiciones de la consulta - sin el numero de ofertas
+    #Total ciudades que cumplen con las condiciones de la consulta
+    
+
+    return total_ofertas #total_ciudades, total_empresas, total_ofertas, ciudad_max, ciudad_min #, rq6
+
+def new_city6(ciudad, pais): 
+    new_structure = {
+        "nombre": ciudad,
+        "pais": pais,
+        "ofertas": lt.newList(datastructure="SINGLE_LINKED"),
+        "empresas_ciudad": mp.newMap(numelements=203564,
+                                     prime=109345121,
+                                     maptype="CHAINING",
+                                     loadfactor=4),
+    }
+    return new_structure
+    
 
 
 def req_7(data_structs):
