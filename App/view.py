@@ -87,6 +87,7 @@ def print_req_1(control):
     experticia = input("Ingrese el nivel de experticia solicitada: ")
     rq1 = controller.req_1(control, ofertas, codigo_pais, experticia)
     print(("El total de ofertas ofrecidas es "),rq1[0])
+    print(("El total de ofertas en el pais es: "), rq1[1])
     print(tabulate(lt.iterator(rq1[1]),headers= "keys", tablefmt="grid"))
 
 
@@ -143,7 +144,15 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    N = input("Ingrese el numero a solicitar: ")
+    anio = input("Ingrese el año: ")
+    mes = input("Ingrese el mes: ")
+    rq7 = controller.req_7(control, N, anio, mes)
+    print(("El total de ofertas ofrecidas es "),lt.size(rq7[3]))
+    print(("El total de ofertas junior ofrecidas es "),(rq7[0]))
+    print(("El total de ofertas mid es "),(rq7[1]))
+    print(("El total de ofertas senior es "),(rq7[2]))
+    print(tabulate(lt.iterator(rq7[3]),headers= "keys", tablefmt="grid"))
 
 
 def print_req_8(control):

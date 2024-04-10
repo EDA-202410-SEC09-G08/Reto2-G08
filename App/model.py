@@ -38,6 +38,7 @@ from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 assert cf
 from datetime import datetime 
+from collections import Counter
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá
@@ -59,8 +60,8 @@ def new_data_structs():
     catalog["multilocation"] = lt.newList()
     catalog["skills"] = lt.newList()
     catalog['map_req1'] = mp.newMap()
-    catalog["map_req2"] = mp.newMap()
     catalog["map_req3"]= mp.newMap()
+    catalog["map_req7"] = mp.newMap()
     return catalog
 
 
@@ -81,7 +82,6 @@ def add_data_jobs(data_structs, data):
         mp.put(mapa_cod, codigo, mapa_exp)
         mp.put(mapa_exp, experticia, lista)
         lt.addLast(lista, data)
-    
     else: 
         mapa_exp = mp.get(mapa_cod,codigo)["value"]
         if not mp.contains(mapa_exp,experticia):
@@ -125,8 +125,69 @@ def add_data_jobs(data_structs, data):
         else:
             expsenior = me.getValue(mp.get(empresa_particular, "exp_senior"))
             mp.put(empresa_particular, "exp_senior",expsenior+1)
-            
+    #vamos a generar la funcion para el req7
+    mapa_anio = data_structs["map_req7"]
+    anio = data["published_at"].split("-")[0]
+    mes = data["published_at"].split("-")[1]
+    oferta = mp.newMap()
+    rta = {"total_ofertas":lt.size(ofertas),
+           "pais_mayor_ofertas":pais_top, 
+           "ciudad_mayor_ofertas":ciudad_top,
+           "ofertas":oferta
+           }
+    if not mp.contains(mapa_anio, anio):
+        mapa_mes = mp.newMap()
+        ofertas = lt.newList
+        mp.put(mapa_anio, anio, mapa_mes)
+        mp.put(mapa_mes, mes, rta)
+        lt.addLast(ofertas, data)
+        paises = Counter(ofertas["country_code"])
+        pais_top = paises.most_common(1)
+        ciudad = Counter(ofertas["city"])
+        ciudad_top = ciudad.most_common(1)
+        lista_final = {"empresas": empresass,
+                        "empresa_max": empresas_max,
+                        "empresas_min": empresas_min}
+        if experticia == "junior":
+            expjunior = me.getValue(mp.get(oferta, "exp_junior"))
+            empresas = Counter(ofertas["company_name"])
+            empresass = empresas.most_common(1)
+            dic_inverso = {}
+            for dato, repeticiones in ofertas.items():
+                if repeticiones not in dic_inverso:
+                    dic_inverso[repeticiones] = []     
+                dic_inverso[repeticiones].append(dato)
+            mp.put(oferta, "exp_junior",lista_final)
+            empresas_max = max(dic_inverso)
+            empresas_min = min(dic_inverso)
+        elif experticia == "mid":
+            expmid = me.getValue(mp.get(oferta, "exp_mid"))
+            dic_inverso = {}
+            for dato, repeticiones in ofertas.items():
+                if repeticiones not in dic_inverso:
+                    dic_inverso[repeticiones] = []     
+                dic_inverso[repeticiones].append(dato)
+            empresas_max = max(dic_inverso)
+            empresas_min = min(dic_inverso)
+            mp.put(oferta, "exp_mid",lista_final)
+        else:
+            expsenior = me.getValue(mp.get(oferta, "exp_senior"))
+            dic_inverso = {}
+            for dato, repeticiones in ofertas.items():
+                if repeticiones not in dic_inverso:
+                    dic_inverso[repeticiones] = []     
+                dic_inverso[repeticiones].append(dato)
+            empresas_max = max(dic_inverso)
+            empresas_min = min(dic_inverso)
+            mp.put(oferta, "exp_senior",lista_final)
+
+
+
+        
+
+
 def add_data_employments_types(data_structs,data):
+
     lt.addLast(data_structs["employments_types"],data)
     
 def add_data_multilocation(data_structs, data):
@@ -295,12 +356,18 @@ def req_6(data_structs):
     pass
 
 
-def req_7(data_structs):
+def req_7(data_structs, N, anio, mes):
     """
     Función que soluciona el requerimiento 7
     """
     # TODO: Realizar el requerimiento 7
-    pass
+    mapa_anio = data_structs["map_req7"]
+    mapa_mes = mp.get(mapa_anio, anio)["value"]
+    rq1 = mp.get(mapa_mes, mes)["value"]
+    num_ofertas = lt.size(rq1)
+    if lt.size(rq1) > N:
+        rq1 = lt.subList(rq1, 1, N)
+    return num_ofertas, rq1
 
 
 def req_8(data_structs):
@@ -335,13 +402,14 @@ def sort_criteria3(data_1, data_2):
     """
     #TODO: Crear función comparadora para ordenar
     
-    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")>datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
+    if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")<datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
         
         return True
     elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
-        if data_1["country_code"]> data_2["country_code"]:
+        if data_1["country_code"]< data_2["country_code"]:
             return True 
-    return False
+    else:
+        return False
 
 def sort(data_structs):
     """
