@@ -86,15 +86,11 @@ def print_req_1(control):
     codigo_pais = input("Ingrese el codigo de pais a solicitar: ")
     experticia = input("Ingrese el nivel de experticia solicitada: ")
     rq1 = controller.req_1(control, ofertas, codigo_pais, experticia)
-<<<<<<< HEAD
-    print(("El total de ofertas ofrecidas es "),rq1[0])
-    print(("El total de ofertas en el pais es: "), rq1[1])
-    print(tabulate(lt.iterator(rq1[1]),headers= "keys", tablefmt="grid"))
-=======
-    print("El total de ofertas ofrecidas en ", codigo_pais, " es ", rq1[0])
-    print("El total de ofertas de trabajo ofrecidas para la condición ", experticia, " es ", rq1[1])
-    print(tabulate(lt.iterator(rq1[2]),headers= "keys", tablefmt="grid"))
->>>>>>> d4f79d7f7044c2c5c986a5b49ebf8146796045b8
+    print("El total de ofertas ofrecidas en ", codigo_pais, " es ", rq1[0][0])
+    print("El total de ofertas de trabajo ofrecidas para la condición ", experticia, " es ", rq1[0][1])
+    print(tabulate(lt.iterator(rq1[0][2]),headers= "keys", tablefmt="grid"))
+    tiempo = f"{rq1[1]:.3f}"
+    print("Tiempo: ", tiempo, "ms")
 
 
 def print_req_2(control):
@@ -138,11 +134,14 @@ def print_req_5(control):
     fecha_inicial = input("Ingrese la fecha inicial solicitada: ")
     fecha_final = input("Ingrese la fecha final solicitada: ")
     rq5 = controller.req_5(control, ciudad, fecha_inicial, fecha_final)
-    print("El total de ofertas publicadas en ", ciudad, " entre la fecha ", fecha_inicial, " y la fecha ", fecha_final, " es ", rq5[0])
-    print("El total de empresas que publicaron por lo menos una oferta en ", ciudad, " durante el periodo de consulta es ", rq5[1])
-    print("La empresa con mayor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[2][0], " con ", rq5[2][1], " ofertas.")
-    print("La empresa con menor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[3][0], " con ", rq5[3][1], " ofertas.")
-    print(tabulate(lt.iterator(rq5[4]),headers= "keys", tablefmt="grid"))
+    print("El total de ofertas publicadas en ", ciudad, " entre la fecha ", fecha_inicial, " y la fecha ", fecha_final, " es ", rq5[0][0])
+    print("El total de empresas que publicaron por lo menos una oferta en ", ciudad, " durante el periodo de consulta es ", rq5[0][1])
+    print("La empresa con mayor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[0][2][0], " con ", rq5[0][2][1], " ofertas.")
+    print("La empresa con menor número de ofertas en la ciudad durante el periodo de consulta es ", rq5[0][3][0], " con ", rq5[0][3][1], " ofertas.")
+    print(tabulate(lt.iterator(rq5[0][4]),headers= "keys", tablefmt="grid"))
+    tiempo = f"{rq5[1]:.3f}"
+    print("Tiempo: ", tiempo, "ms")
+
     
 
 def print_req_6(control):
@@ -154,11 +153,14 @@ def print_req_6(control):
     experticia = input("Ingrese el nivel de experticia solicitada: ")
     anio = int(input("Ingrese el año a solicitar: "))
     rq6 = controller.req_6(control, numero_ciudades, experticia, anio)
-    #print("El total de ciudades que cumplen con las condiciones de la consulta es ", rq6[0])
-    #print("El total de empresas que cumplen con las condiciones de la consulta es ", rq6[1])
-    print("El total de ofertas publicadas que cumplen con las condiciones de la consulta es ", rq6)
-    #print("El nombre de la ciudad con mayor cantidad de ofertas de empleos es ", rq6[3][0], " con ", rq6[3][1], " ofertas.")
-    #print("El nombre de la ciudad con menor cantidad de ofertas de empleos es  ", rq6[4][0], " con ", rq6[4][1], " ofertas.")
+    print("El total de ciudades que cumplen con las condiciones de la consulta es ", rq6[0][0])
+    print("El total de empresas que cumplen con las condiciones de la consulta es ", rq6[0][1])
+    print("El total de ofertas publicadas que cumplen con las condiciones de la consulta es ", rq6[0][2])
+    print("El nombre de la ciudad con mayor cantidad de ofertas de empleos es ", rq6[0][3][0], " con ", rq6[0][3][1], " ofertas.")
+    print("El nombre de la ciudad con menor cantidad de ofertas de empleos es ", rq6[0][4][0], " con ", rq6[0][4][1], " ofertas.")
+    print(tabulate(lt.iterator(rq6[0][5]),headers= "keys", tablefmt="grid"))
+    tiempo = f"{rq6[1]:.3f}"
+    print("Tiempo: ", tiempo, "ms")
 
 
 def print_req_7(control):
@@ -166,15 +168,16 @@ def print_req_7(control):
         Función que imprime la solución del Requerimiento 7 en consola
     """
     # TODO: Imprimir el resultado del requerimiento 7
-    N = input("Ingrese el numero a solicitar: ")
-    anio = input("Ingrese el año: ")
-    mes = input("Ingrese el mes: ")
-    rq7 = controller.req_7(control, N, anio, mes)
-    print(("El total de ofertas ofrecidas es "),lt.size(rq7[3]))
-    print(("El total de ofertas junior ofrecidas es "),(rq7[0]))
-    print(("El total de ofertas mid es "),(rq7[1]))
-    print(("El total de ofertas senior es "),(rq7[2]))
-    print(tabulate(lt.iterator(rq7[3]),headers= "keys", tablefmt="grid"))
+    numero_paises = int(input("Ingrese el numero de paises a solicitar: "))
+    anio = int(input("Ingrese el año de la consulta: "))
+    mes = str(input("Ingrese el mes de la consulta: "))
+    rq7 = controller.req_7(control, numero_paises, anio, mes)
+    print("El total de ofertas de empleo en los paises de la consulta en ", anio, " en el mes ", mes, " es ", rq7[0][0])
+    print("El número de ciudades donde se ofertó en los países resultantes de la consulta es ", rq7[0][1])
+    print("El nombre del país con mayor cantidad de ofertas es ", rq7[0][2][0], " con ", rq7[0][2][1], " ofertas")
+    print("El nombre de la ciudad con mayor cantidad de ofertas es ", " con ", " ofertas")
+    tiempo = f"{rq7[1]:.3f}"
+    print("Tiempo: ", tiempo, "ms")
 
 
 def print_req_8(control):

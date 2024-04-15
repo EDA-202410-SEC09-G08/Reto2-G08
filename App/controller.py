@@ -100,8 +100,11 @@ def req_1(control,ofertas, codigo_pais, experticia):
     Retorna el resultado del requerimiento 1
     """
     # TODO: Modificar el requerimiento 1
+    start_time = get_time()    
     rq1 = model.req_1(control["model"], ofertas, codigo_pais, experticia)
-    return rq1
+    end_time = get_time()
+    tiempo = delta_time(end_time, start_time)
+    return rq1, tiempo
 
 
 def req_2(control, ofertas, empresa, ciudad):
@@ -134,23 +137,35 @@ def req_5(control, ciudad, fecha_inicial, fecha_final):
     Retorna el resultado del requerimiento 5
     """
     # TODO: Modificar el requerimiento 5
-    return model.req_5(control["model"], ciudad, fecha_inicial, fecha_final)
+    start_time = get_time()    
+    rq5 = model.req_5(control["model"], ciudad, fecha_inicial, fecha_final)
+    end_time = get_time()
+    tiempo = delta_time(end_time, start_time)
+    return rq5, tiempo
+
 
 def req_6(control, numero_ciudades, experticia, anio):
     """
     Retorna el resultado del requerimiento 6
     """
     # TODO: Modificar el requerimiento 6
-    return model.req_6(control["model"], numero_ciudades, experticia, anio)
+    start_time = get_time()    
+    rq6 = model.req_6(control["model"], numero_ciudades, experticia, anio)
+    end_time = get_time()
+    tiempo = delta_time(end_time, start_time)
+    return rq6, tiempo
     
 
-
-def req_7(control, N, anio, mes):
+def req_7(control, numero_paises, anio, mes):
     """
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
-    return model.req_7(control["model"],N, anio, mes)
+    start_time = get_time()    
+    rq7 = model.req_7(control["model"], numero_paises, anio, mes)
+    end_time = get_time()
+    tiempo = delta_time(end_time, start_time)
+    return rq7, tiempo
 
 
 def req_8(control):

@@ -59,11 +59,6 @@ def new_data_structs():
     catalog["employments_types"] = lt.newList()
     catalog["multilocation"] = lt.newList()
     catalog["skills"] = lt.newList()
-<<<<<<< HEAD
-    catalog['map_req1'] = mp.newMap()
-    catalog["map_req3"]= mp.newMap()
-    catalog["map_req7"] = mp.newMap()
-=======
     catalog['map_req1'] = mp.newMap(numelements=203564,
                                     prime=109345121,
                                     maptype= "CHAINING", 
@@ -80,11 +75,121 @@ def new_data_structs():
                                      prime=109345121,
                                      maptype= "CHAINING", 
                                      loadfactor=4)
-    catalog["map_req6"] = mp.newMap(numelements=203564, 
-                                     prime=109345121,
-                                     maptype= "CHAINING", 
-                                     loadfactor=4)
->>>>>>> d4f79d7f7044c2c5c986a5b49ebf8146796045b8
+    catalog["dic_req_6"] = {
+        2022: {
+            "junior": lt.newList(datastructure="SINGLE_LINKED"),
+            "mid": lt.newList(datastructure="SINGLE_LINKED"),
+            "senior": lt.newList(datastructure="SINGLE_LINKED")
+            },
+        2023: {
+            "junior": lt.newList(datastructure="SINGLE_LINKED"),
+            "mid": lt.newList(datastructure="SINGLE_LINKED"),
+            "senior": lt.newList(datastructure="SINGLE_LINKED")
+            }
+        }
+    catalog["dic_req_7"] = {
+        2022: {
+            "01": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "02": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "03": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "04": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "05": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "06": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "07": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "08": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "09": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "10": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "11": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "12": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4)
+            },
+        2023: {
+            "01": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "02": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "03": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "04": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "05": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "06": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "07": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "08": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "09": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "10": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "11": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4),
+            "12": mp.newMap(numelements=203564,
+                            prime=109345121,
+                            maptype= "CHAINING", 
+                            loadfactor=4)
+            }
+        }
+    
     return catalog
 
 
@@ -102,13 +207,6 @@ def add_data_jobs(data_structs, data):
     codigo = data["country_code"]
     experticia = data["experience_level"]
     if not mp.contains(mapa_cod, codigo):
-<<<<<<< HEAD
-        mapa_exp = mp.newMap()
-        lista = lt.newList()
-        mp.put(mapa_cod, codigo, mapa_exp)
-        mp.put(mapa_exp, experticia, lista)
-        lt.addLast(lista, data)
-=======
         map_content = {
             "junior": lt.newList(datastructure="SINGLE_LINKED"),
             "mid": lt.newList(datastructure="SINGLE_LINKED"),
@@ -116,7 +214,6 @@ def add_data_jobs(data_structs, data):
         }
         lt.addLast(map_content[experticia], data)
         mp.put(mapa_cod, codigo, map_content)
->>>>>>> d4f79d7f7044c2c5c986a5b49ebf8146796045b8
     else: 
         map_content = me.getValue(mp.get(mapa_cod, codigo))
         lt.addLast(map_content[experticia], data)
@@ -155,69 +252,6 @@ def add_data_jobs(data_structs, data):
         else:
             expsenior = me.getValue(mp.get(empresa_particular, "exp_senior"))
             mp.put(empresa_particular, "exp_senior",expsenior+1)
-<<<<<<< HEAD
-    #vamos a generar la funcion para el req7
-    mapa_anio = data_structs["map_req7"]
-    anio = data["published_at"].split("-")[0]
-    mes = data["published_at"].split("-")[1]
-    oferta = mp.newMap()
-    rta = {"total_ofertas":lt.size(ofertas),
-           "pais_mayor_ofertas":pais_top, 
-           "ciudad_mayor_ofertas":ciudad_top,
-           "ofertas":oferta
-           }
-    if not mp.contains(mapa_anio, anio):
-        mapa_mes = mp.newMap()
-        ofertas = lt.newList
-        mp.put(mapa_anio, anio, mapa_mes)
-        mp.put(mapa_mes, mes, rta)
-        lt.addLast(ofertas, data)
-        paises = Counter(ofertas["country_code"])
-        pais_top = paises.most_common(1)
-        ciudad = Counter(ofertas["city"])
-        ciudad_top = ciudad.most_common(1)
-        lista_final = {"empresas": empresass,
-                        "empresa_max": empresas_max,
-                        "empresas_min": empresas_min}
-        if experticia == "junior":
-            expjunior = me.getValue(mp.get(oferta, "exp_junior"))
-            empresas = Counter(ofertas["company_name"])
-            empresass = empresas.most_common(1)
-            dic_inverso = {}
-            for dato, repeticiones in ofertas.items():
-                if repeticiones not in dic_inverso:
-                    dic_inverso[repeticiones] = []     
-                dic_inverso[repeticiones].append(dato)
-            mp.put(oferta, "exp_junior",lista_final)
-            empresas_max = max(dic_inverso)
-            empresas_min = min(dic_inverso)
-        elif experticia == "mid":
-            expmid = me.getValue(mp.get(oferta, "exp_mid"))
-            dic_inverso = {}
-            for dato, repeticiones in ofertas.items():
-                if repeticiones not in dic_inverso:
-                    dic_inverso[repeticiones] = []     
-                dic_inverso[repeticiones].append(dato)
-            empresas_max = max(dic_inverso)
-            empresas_min = min(dic_inverso)
-            mp.put(oferta, "exp_mid",lista_final)
-        else:
-            expsenior = me.getValue(mp.get(oferta, "exp_senior"))
-            dic_inverso = {}
-            for dato, repeticiones in ofertas.items():
-                if repeticiones not in dic_inverso:
-                    dic_inverso[repeticiones] = []     
-                dic_inverso[repeticiones].append(dato)
-            empresas_max = max(dic_inverso)
-            empresas_min = min(dic_inverso)
-            mp.put(oferta, "exp_senior",lista_final)
-
-
-
-        
-
-
-=======
     
     #Vamos a generar la función para el req 5
     mapa_ciudades = data_structs["map_req5"]
@@ -231,22 +265,52 @@ def add_data_jobs(data_structs, data):
         lt.addLast(ofertas_ciudad, data)
 
     #Vamos a generar la función para el req 6
-    mapa_anios = data_structs["map_req6"]
-    anio = data["published_at"].split("-")[0]
+    dic_anios = data_structs["dic_req_6"]
+    anio = int(data["published_at"].split("-")[0])
     experticia = data["experience_level"]
-    if not mp.contains(mapa_anios, anio): 
-        dic_por_exp = {
-            "junior": lt.newList(datastructure="SINGLE_LINKED"),
-            "mid": lt.newList(datastructure="SINGLE_LINKED"),
-            "senior": lt.newList(datastructure="SINGLE_LINKED")
+    ofertas_exp_anio = dic_anios[anio][experticia]
+    lt.addLast(ofertas_exp_anio, data)
+
+    #Vamos a generar la función para el req 7
+    dic_anios7 = data_structs["dic_req_7"]
+    anio = int(data["published_at"].split("-")[0])
+    mes = str(data["published_at"].split("-")[1])
+    paises_anio_mes = dic_anios7[anio][mes]
+    pais = data["country_code"]
+    ciudad = data["city"]
+    if not mp.contains(paises_anio_mes, pais): 
+        info_pais = {
+            "pais": pais,
+            "ofertas": lt.newList(datastructure="SINGLE_LINKED"),
+            "num_ofertas": 0,
+            "ciudades_pais": mp.newMap(numelements=203564,
+                                       prime=109345121,
+                                       maptype= "CHAINING", 
+                                       loadfactor=4)
         }
-        lt.addLast(dic_por_exp[experticia], data)
-        mp.put(mapa_anios, anio, dic_por_exp)
+        lt.addLast(info_pais["ofertas"], data)
+        info_pais["num_ofertas"] = lt.size(info_pais["ofertas"])
+        if not mp.contains(info_pais["ciudades_pais"], ciudad): 
+            ofertas_ciudad_pais = lt.newList(datastructure="SINGLE_LINKED")
+            lt.addLast(ofertas_ciudad_pais, data)
+            mp.put(info_pais["ciudades_pais"], ciudad, ofertas_ciudad_pais)
+        else: 
+            ofertas_ciudad_pais = me.getValue(mp.get(info_pais["ciudades_pais"], ciudad))
+            lt.addLast(ofertas_ciudad_pais, data)
+        mp.put(paises_anio_mes, pais, info_pais)
     else: 
-        dic_por_exp = me.getValue(mp.get(mapa_anios, anio))
-        lt.addLast(dic_por_exp[experticia], data)
+        info_pais = me.getValue(mp.get(paises_anio_mes, pais))
+        lt.addLast(info_pais["ofertas"], data)
+        info_pais["num_ofertas"] = lt.size(info_pais["ofertas"])
+        if not mp.contains(info_pais["ciudades_pais"], ciudad): 
+            ofertas_ciudad_pais = lt.newList(datastructure="SINGLE_LINKED")
+            lt.addLast(ofertas_ciudad_pais, data)
+            mp.put(info_pais["ciudades_pais"], ciudad, ofertas_ciudad_pais)
+        else: 
+            ofertas_ciudad_pais = me.getValue(mp.get(info_pais["ciudades_pais"], ciudad))
+            lt.addLast(ofertas_ciudad_pais, data)
+
             
->>>>>>> d4f79d7f7044c2c5c986a5b49ebf8146796045b8
 def add_data_employments_types(data_structs,data):
 
     lt.addLast(data_structs["employments_types"],data)
@@ -485,45 +549,157 @@ def req_6(data_structs, numero_ciudades, experticia, anio):
     Función que soluciona el requerimiento 6
     """
     # TODO: Realizar el requerimiento 6
-    mapa_anios = data_structs["map_req6"]
-
-    #Total ofertas que cumplen con las condiciones de la consulta - sin el numero de ofertas
-    ofertas_anio = me.getValue(mp.get(mapa_anios, anio))
-    ofertas_anio_exp = ofertas_anio[experticia]
+    dic_anios = data_structs["dic_req_6"]
+    #Encuentro la lista de ofertas del año dado con la experticia dada
+    ofertas_anio_exp = dic_anios[anio][experticia]
     total_ofertas = lt.size(ofertas_anio_exp)
 
-    #Total empresas que cumplen con las condiciones de la consulta - sin el numero de ofertas
-    #Total ciudades que cumplen con las condiciones de la consulta
+    #Encuentro el total de empresas que tienen ofertas publicadas en el año dado con la experticia dada
+    #Encuentro el total de ciudades que tienen ofertas publicadas en el año dado con la experiencia dada.
+    empresas = lt.newList(datastructure="SINGLE_LINKED")
+    ciudades = mp.newMap(numelements=17,
+                         prime=109345121,
+                         maptype="CHAINING",
+                         loadfactor=4)
     
+    for oferta in lt.iterator(ofertas_anio_exp): 
+        empresa = oferta["company_name"]
+        ciudad = oferta["city"]
+        if not lt.isPresent(empresas, empresa): 
+            lt.addLast(empresas, empresa)
+        if not mp.contains(ciudades, ciudad): 
+            info_ciudad = {
+                "nombre": ciudad,
+                "pais": oferta["country_code"],
+                "ofertas": lt.newList(datastructure="SINGLE_LINKED"),
+                "num_ofertas": 0,
+                "empresas_ciudad": mp.newMap(numelements=17,
+                                             prime=109345121,
+                                             maptype="CHAINING",
+                                             loadfactor=4),
+                "num_empresas": 0,
+                "mayor_empresa": ()
+                }
+            lt.addLast(info_ciudad["ofertas"], oferta)
+            info_ciudad["num_ofertas"] = lt.size(info_ciudad["ofertas"])
 
-    return total_ofertas #total_ciudades, total_empresas, total_ofertas, ciudad_max, ciudad_min #, rq6
-
-def new_city6(ciudad, pais): 
-    new_structure = {
-        "nombre": ciudad,
-        "pais": pais,
-        "ofertas": lt.newList(datastructure="SINGLE_LINKED"),
-        "empresas_ciudad": mp.newMap(numelements=203564,
-                                     prime=109345121,
-                                     maptype="CHAINING",
-                                     loadfactor=4),
-    }
-    return new_structure
+            if not mp.contains(info_ciudad["empresas_ciudad"], empresa): 
+                info_empresa = {
+                    "nombre": empresa,
+                    "ofertas_empresa": lt.newList(datastructure="SINGLE_LINKED"),
+                    "num_ofertas": 0
+                }
+                lt.addLast(info_empresa["ofertas_empresa"], oferta)
+                info_empresa["num_ofertas"] = lt.size(info_empresa["ofertas_empresa"])
+                mp.put(info_ciudad["empresas_ciudad"], empresa, info_empresa)
+            else: 
+                info_empresa = me.getValue(mp.get(info_ciudad["empresas_ciudad"], empresa))
+                lt.addLast(info_empresa["ofertas_empresa"], oferta)
+                info_empresa["num_ofertas"] = lt.size(info_empresa["ofertas_empresa"])
+            mp.put(ciudades, ciudad, info_ciudad)
+        else: 
+            info_ciudad = me.getValue(mp.get(ciudades, ciudad))
+            lt.addLast(info_ciudad["ofertas"], oferta)
+            info_ciudad["num_ofertas"] = lt.size(info_ciudad["ofertas"])
+            if not mp.contains(info_ciudad["empresas_ciudad"], empresa): 
+                info_empresa = {
+                    "nombre": empresa,
+                    "ofertas_empresa": lt.newList(datastructure="SINGLE_LINKED"),
+                    "num_ofertas": 0
+                }
+                lt.addLast(info_empresa["ofertas_empresa"], oferta)
+                info_empresa["num_ofertas"] = lt.size(info_empresa["ofertas_empresa"])
+                mp.put(info_ciudad["empresas_ciudad"], empresa, info_empresa)
+            else: 
+                info_empresa = me.getValue(mp.get(info_ciudad["empresas_ciudad"], empresa))
+                lt.addLast(info_empresa["ofertas_empresa"], oferta)
+                info_empresa["num_ofertas"] = lt.size(info_empresa["ofertas_empresa"])
     
+    total_empresas = lt.size(empresas)
+    lista_ciudades = mp.keySet(ciudades)
+    total_ciudades = lt.size(lista_ciudades)
+    if total_ciudades > numero_ciudades: 
+        total_ciudades = numero_ciudades
+
+    #Encuentro la ciudad con mayor cantidad de ofertas y su conteo y la ciudad con menor cantidad de ofertas y su conteo
+    max_ofertas_ciu = 0
+    min_ofertas_ciu = 203564
+    lista_dic_ciudades = lt.newList(datastructure="SINGLE_LINKED") #La lista final
+    for ciudad in lt.iterator(lista_ciudades): 
+        info_ciudad = me.getValue(mp.get(ciudades, ciudad))
+        num_ofertas_ciudad = info_ciudad["num_ofertas"]
+        if num_ofertas_ciudad > max_ofertas_ciu: 
+            max_ofertas_ciu = num_ofertas_ciudad
+            ciudad_max = ciudad
+        if num_ofertas_ciudad < min_ofertas_ciu: 
+            min_ofertas_ciu = num_ofertas_ciudad
+            ciudad_min = ciudad
+        lista_empresas_ciudad = mp.keySet(info_ciudad["empresas_ciudad"])
+        num_empresas_ciudad = lt.size(lista_empresas_ciudad)
+        info_ciudad["num_empresas"] = num_empresas_ciudad
+        max_ofertas_emp = 0
+        for empresa in lt.iterator(lista_empresas_ciudad): 
+            info_empresa = me.getValue(mp.get(info_ciudad["empresas_ciudad"], empresa))
+            num_ofertas_empresa = info_empresa["num_ofertas"]
+            if num_ofertas_empresa > max_ofertas_emp: 
+                max_ofertas_emp = num_ofertas_empresa
+                empresa_max = empresa
+        mayor_empresa = (empresa_max, max_ofertas_emp)
+        info_ciudad["mayor_empresa"] = mayor_empresa
+        lt.addLast(lista_dic_ciudades, info_ciudad)
+    rta_ciudad_max = (ciudad_max, max_ofertas_ciu)
+    rta_ciudad_min = (ciudad_min, min_ofertas_ciu)
+
+    #Ordeno la lista de ciudades por numero de ofertas.
+    merg.sort(lista_dic_ciudades, sort_criteria6)
+    if lt.size(lista_dic_ciudades) > numero_ciudades: 
+        lista_dic_ciudades = lt.subList(lista_dic_ciudades, 1, numero_ciudades)
+    for ciudad in lt.iterator(lista_dic_ciudades): 
+        ciudad.pop("ofertas")
+        ciudad.pop("empresas_ciudad")
+
+    return numero_ciudades, total_empresas, total_ofertas , rta_ciudad_max,  rta_ciudad_min, lista_dic_ciudades
 
 
-def req_7(data_structs, N, anio, mes):
+def req_7(data_structs, numero_paises, anio, mes):
     """
     Función que soluciona el requerimiento 7
     """
     # TODO: Realizar el requerimiento 7
-    mapa_anio = data_structs["map_req7"]
-    mapa_mes = mp.get(mapa_anio, anio)["value"]
-    rq1 = mp.get(mapa_mes, mes)["value"]
-    num_ofertas = lt.size(rq1)
-    if lt.size(rq1) > N:
-        rq1 = lt.subList(rq1, 1, N)
-    return num_ofertas, rq1
+    dic_anios = data_structs["dic_req_6"]
+    paises_anio_mes = dic_anios[anio][mes]
+    lista_paises = mp.keySet(paises_anio_mes)
+
+    #Construyo la lista de paises para las respuestas de la consulta y encuentro el país con más ofertas
+    lista_dic_paises = lt.newList(datastructure="SINGLE_LINKED") #La lista de paises final
+    max_ofertas_pais = 0
+    for pais in lt.iterator(lista_paises): 
+        info_pais = me.getValue(mp.get(paises_anio_mes, pais))
+        lt.addLast(lista_dic_paises, info_pais) 
+        num_ofertas_pais = info_pais["num_ofertas"]
+        if num_ofertas_pais > max_ofertas_pais: 
+            max_ofertas_pais = num_ofertas_pais
+            pais_max = pais
+    rta_pais_max = (pais_max, max_ofertas_pais) 
+
+    merg.sort(lista_dic_paises, sort_criteria7)
+    if lt.size(lista_dic_paises) > numero_paises: 
+        lista_dic_paises = lt.subList(lista_dic_paises, 1, numero_paises)
+
+    #Encuentro el total de ofertas de empleo según las condiciones de la consulta.
+    total_ofertas = 0
+    total_ciudades = 0
+    for pais in lt.iterator(lista_dic_paises): 
+        num_ofertas_pais = pais["num_ofertas"]
+        total_ofertas += num_ofertas_pais
+        mapa_cudades_pais = pais["ciudades_pais"]
+        lista_ciudades_pais = mp.keySet(mapa_cudades_pais)
+        numero_ciudades_pais = lt.size(lista_ciudades_pais)
+        total_ciudades += numero_ciudades_pais
+
+    #Ciudades donde se ofertó en los paises de la consulta. 
+
+    return total_ofertas, total_ciudades, rta_pais_max
 
 
 def req_8(data_structs):
@@ -570,25 +746,36 @@ def sort_criteria3(data_1, data_2):
     elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
         if data_1["country_code"]< data_2["country_code"]:
             return True 
-<<<<<<< HEAD
-    else:
-        return False
-=======
     else: 
         return False
     
 
 def sort_criteria5(data_1, data_2): 
     if datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ")<datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") :
-        
         return True
     elif datetime.strptime(data_1["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ") == datetime.strptime(data_2["published_at"],"%Y-%m-%dT%H:%M:%S.%fZ"):
-        if data_1["company_name"]< data_2["company_name"]:
+        if data_1["company_name"] < data_2["company_name"]:
             return True 
     else: 
         return False
 
->>>>>>> d4f79d7f7044c2c5c986a5b49ebf8146796045b8
+
+def sort_criteria6(data_1, data_2): 
+    if data_1["num_ofertas"] > data_2["num_ofertas"]: 
+        return True
+    elif data_1["num_ofertas"] == data_2["num_ofertas"]:
+        if data_1["nombre"] > data_2["nombre"]: 
+            return True 
+    else: 
+        return False
+    
+
+def sort_criteria7(data_1, data_2): 
+    if data_1["num_ofertas"] > data_2["num_ofertas"]: 
+        return True
+    else: 
+        return False
+
 
 def sort(data_structs):
     """
